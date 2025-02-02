@@ -11,6 +11,8 @@
 
     const app = express()
     const server = httpServer.createServer(app)
+
+    const port = process.env.PORT || 5000
     const io = socket(server, {
         cors: {
             origin: "*",
@@ -69,7 +71,15 @@
     app.use('/api/messages', messageRoutes)
 
 
-    const port = process.env.PORT || 5000
+const path = require("path");
+__dirname = path.resolve();
+// heroku deployment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
     server.listen(port, () => {
         console.log(`Server is running on port ${port}`)
