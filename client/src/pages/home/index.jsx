@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 import { Menu } from 'lucide-react';
 
-const socket = io('http://localhost:5000');
+const socket = io('https://chatter-sanyam.onrender.com');
 localStorage.setItem('socket', socket);
 
 const Home = () => {
